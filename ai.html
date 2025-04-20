@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI 互動體驗室 - 鴨嘴獸數位典藏平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>鴨嘴獸數位典藏平台</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="about.html">認識鴨嘴獸</a></li>
+        <li><a href="environment.html">生活與環境</a></li>
+        <li><a href="culture.html">文化與象徵</a></li>
+        <li><a href="archive.html">開放典藏資料</a></li>
+        <li><a href="ai.html">AI 互動體驗室</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="intro">
+    <h2>🤖 AI 互動體驗室</h2>
+    <p>與 AI 對話，或體驗模擬鴨嘴獸生存環境，增進對牠的認識！</p>
+  </section>
+
+  <div class="interaction-wrapper">
+
+    <!-- ===== 問答互動 ===== -->
+    <div class="interaction-block">
+      <h3>💬 與 AI 問答互動</h3>
+      <input id="questionInput" type="text" placeholder="輸入你想問鴨嘴獸的問題">
+      <button id="askBtn" type="button">送出問題</button>
+      <p id="answerBox">AI 回答會顯示在這裡</p>
+    </div>
+  
+    <!-- ===== 棲地模擬 ===== -->
+    <div class="interaction-block">
+      <h3>🌿 棲地模擬實驗</h3>
+    
+      <label>選擇水溫：
+        <select id="tempSelect">
+          <option value="10">冰冷 (10°C)</option>
+          <option value="20" selected>適中 (20°C)</option>
+          <option value="30">溫暖 (30°C)</option>
+        </select>
+      </label><br>
+    
+      <label>是否有水流：
+        <select id="flowSelect">
+          <option>有</option>
+          <option>無</option>
+        </select>
+      </label><br>
+    
+      <label>食物豐富？：
+        <select id="foodSelect">
+          <option>豐富</option>
+          <option>普通</option>
+          <option>缺乏</option>
+        </select>
+      </label><br>
+    
+      <label>隱蔽環境：
+        <select id="hideSelect">
+          <option>有草叢</option>
+          <option>有石塊</option>
+          <option>開闊地</option>
+        </select>
+      </label><br>
+    
+      <label>天敵數量：
+        <select id="predSelect">
+          <option>無</option>
+          <option>少量</option>
+          <option>眾多</option>
+        </select>
+      </label><br>
+    
+      <label>棲地大小：
+        <select id="sizeSelect">
+          <option>小（<10m²）</option>
+          <option>中（10~50m²）</option>
+          <option>大（>50m²）</option>
+        </select>
+      </label><br>
+    
+      <label>陽光照射：
+        <select id="sunSelect">
+          <option>全日照</option>
+          <option>半日照</option>
+          <option>遮蔽</option>
+        </select>
+      </label><br>
+    
+      <button id="simulateBtn" type="button">開始模擬</button>
+      <p id="resultBox">這裡會顯示模擬結果</p>
+    </div>
+
+  </div><!-- /.interaction-wrapper -->
+
+  <footer>
+    <p>© 2025 鴨嘴獸數位典藏平台 | 製作人：蔡佑妮</p>
+  </footer>
+
+  <script>
+  // ==== 問答互動（示範版）====
+  document.getElementById('askBtn').addEventListener('click', () => {
+    const q = document.getElementById('questionInput').value.trim();
+    const aBox = document.getElementById('answerBox');
+    if (!q) {
+      aBox.textContent = '請先輸入問題！';
+      return;
+    }
+    // 這裡可替換為呼叫後端 / OpenAI API
+    aBox.textContent = `（示範回覆）您問了「${q}」，鴨嘴獸目前正在思考中…`;
+  });
+
+  // ==== 棲地模擬 ====
+  document.getElementById('simulateBtn').addEventListener('click', () => {
+    const t    = document.getElementById('tempSelect').value;   // 10 / 20 / 30
+    const flow = document.getElementById('flowSelect').value;   // 有 / 無
+    const food = document.getElementById('foodSelect').value;   // 豐富 / 普通 / 缺乏
+    const hide = document.getElementById('hideSelect').value;   // 有草叢 / 有石塊 / 開闊地
+    const pred = document.getElementById('predSelect').value;   // 無 / 少量 / 眾多
+    const size = document.getElementById('sizeSelect').value;   // 小 / 中 / 大
+    const sun  = document.getElementById('sunSelect').value;    // 全日照 / 半日照 / 遮蔽
+
+    // === 簡易評分邏輯 ===
+    let score = 0;
+    score += (t === '20') ? 2 : (t === '10' ? 0 : -1);
+    score += (flow === '有') ? 1 : -1;
+    score += (food === '豐富') ? 2 : (food === '普通' ? 0 : -2);
+    score += (hide !== '開闊地') ? 1 : -1;
+    score += (pred === '無') ? 2 : (pred === '少量' ? 0 : -2);
+    score += (size !== '小（<10m²）') ? 1 : 0;
+    score += (sun === '半日照') ? 1 : (sun === '全日照' ? 0 : -1);
+
+    // === 轉換為文字 ===
+    const level = score >= 5 ? '✨ 非常適合！' :
+                  score >= 2 ? '🙂 尚可生存' :
+                  score >= 0 ? '😐 勉強可行' : '⚠️ 不適合鴨嘴獸居住';
+
+    document.getElementById('resultBox').textContent = `棲地適合度評估：${level}`;
+  });
+  </script>
+</body>
+</html>

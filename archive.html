@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>開放典藏資料 | 鴨嘴獸數位典藏平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>鴨嘴獸數位典藏平台</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="about.html">認識鴨嘴獸</a></li>
+        <li><a href="environment.html">生活與環境</a></li>
+        <li><a href="culture.html">文化與象徵</a></li>
+        <li><a href="archive.html">開放典藏資料</a></li>
+        <li><a href="ai.html">AI 互動體驗室</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="intro">
+    <h2>鴨嘴獸典藏資料庫</h2>
+    <p>探索圖像、影片、學術研究與文化紀錄，查詢完整 metadata。</p>
+  </section>
+
+  <section class="search-bar">
+    <input type="text" id="searchInput" placeholder="搜尋關鍵字例如:鴨嘴獸...">
+    <button onclick="searchData()">搜尋</button>
+  </section>
+
+  <section class="archive-results" id="results">
+    <!-- 結果會由 JS 動態插入 -->
+  </section>
+
+  <footer>
+    <p>© 2025 鴨嘴獸數位典藏平台 | 製作人：蔡佑妮</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
